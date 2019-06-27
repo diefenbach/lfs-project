@@ -62,14 +62,7 @@ INSTALLED_APPS = (
     'localflavor',
     'postal',
     'paypal.standard.ipn',
-    # 'lfs_io',
     'lfs_paypal',
-    # 'lfs_carousel',
-    # 'lfs_paymill',
-    # 'lfs_bulk_prices',
-    # 'lfs_samples',
-    # 'lfs_canonical',
-    # 'cookielaw',
 )
 
 MIDDLEWARE = [
