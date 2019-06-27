@@ -9,6 +9,7 @@ django-paypal == 0.3.6
 Pillow == 4.0
 PyYAML == 3.11
 python-memcached == 1.58
+psycopg2 == 2.8.3
 requests > 2.8.0, < 2.9
 
 py == 1.4.26
