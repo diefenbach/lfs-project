@@ -1,0 +1,16 @@
+Django > 1.10.0, < 1.11
+csscompressor > 0.9, < 0.10
+django-cookie-law == 2.0.1
+django-compressor == 2.1.1
+django-countries >= 4.0, < 4.1
+django-localflavor == 1.4.1
+django-nose == 1.4
+django-paypal == 0.3.6
+Pillow == 4.0
+PyYAML == 3.11
+python-memcached == 1.58
+requests > 2.8.0, < 2.9
+
+py == 1.4.26
+pytest == 2.6.4
+pytest-django == 2.7.0

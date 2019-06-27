@@ -1,0 +1,13 @@
+*.pyc
+*.pyo
+*.DS_Store
+*sitestatic/
+*media/
+*dlcache/
+*.mr.developer.cfg
+*.vagrant
+wsgi.py
+src/
+project/
+lfs.log
+local_settings.py
