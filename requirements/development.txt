@@ -1,10 +1,11 @@
-Django
+Django==5.0.1
 csscompressor
 django-cookie-law
 django-compressor
 django-countries
 django-localflavor
-django-paypal == 0.3.6
+django-paypal == 2.0
+pymemcache
 Pillow
 PyYAML
 python-memcached
