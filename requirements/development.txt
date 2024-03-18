@@ -1,4 +1,4 @@
-Django==5.0.1
+Django==5.0.3
 csscompressor
 django-cookie-law
 django-compressor
