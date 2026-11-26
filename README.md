@@ -52,17 +52,6 @@ settings themselves (price calculators, units, criteria, ...) are in `shop/setti
 - Run `gunicorn shop.wsgi` behind a web server (nginx, Caddy) that terminates HTTPS, redirects HTTP to HTTPS, and
   serves `static/` and `media/`. Behind such a proxy set `DJANGO_BEHIND_PROXY=true`.
 
-## Before django-lfs 1.0 is on PyPI
-
-Until then the packages come from a local package folder:
-
-```sh
-UV_FIND_LINKS=/path/to/packages uv sync
-```
-
-When a package in that folder is rebuilt with the same version number, add `--reinstall --no-cache`, otherwise uv
-keeps the copy it installed before.
-
 ## License
 
 BSD (django-lfs, lfs-theme). The management interface bundles TinyMCE under GPL-2.0-or-later; see the django-lfs
