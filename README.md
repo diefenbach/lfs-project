@@ -17,7 +17,7 @@ uv run --env-file .env python manage.py createsuperuser
 uv run --env-file .env python manage.py runserver
 ```
 
-Then open http://127.0.0.1:8000/ for the shop and http://127.0.0.1:8000/manage/ to add categories, products, and
+Then open http://127.0.0.1:8000/ for the shop and http://127.0.0.1:8000/manage/dashboard/ to add categories, products, and
 pages. Without `POSTGRES_DB` the shop uses SQLite (`db.sqlite3`).
 
 ## What is included
