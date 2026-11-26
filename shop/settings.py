@@ -10,7 +10,7 @@ from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
-from lfs.settings import LFS_APPS
+from lfs.settings import DEFAULTS, LFS_APPS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     # Standard add-ons
     "lfs_canonical",
     # Optional: "lfs_paypal" (lfs-project[paypal]), "lfs_stripe" (lfs-project[stripe]), "lfs_cookie_consent"
-    # (lfs-project[consent]), "lfs_cookie_consent" and then "lfs_gtm" (lfs-project[gtm]), "lfs_carousel", ...
+    # (lfs-project[consent]), "lfs_cookie_consent" and then "lfs_gtm" (lfs-project[gtm]),
+    # "lfs_bulk_prices" (lfs-project[bulk-prices]), "lfs_carousel", ...
 ]
 if os.environ.get("POSTGRES_DB"):
     # PostgreSQL's unaccent: the search then ignores accents (creme finds crème).
@@ -162,6 +163,13 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # LFS: only the settings that differ from LFS's defaults (see lfs/settings.py in django-lfs).
 LFS_CURRENCY = os.environ.get("LFS_CURRENCY", "EUR")
+# Price calculators a manager can choose: LFS's, plus bulk prices when lfs-bulk-prices is installed.
+if "lfs_bulk_prices" in INSTALLED_APPS:
+    LFS_PRICE_CALCULATORS = [
+        *DEFAULTS["LFS_PRICE_CALCULATORS"],
+        ["lfs_bulk_prices.calculator.BulkPricesCalculator", _("Bulk prices")],
+    ]
+
 # Payment processors a manager can choose for a payment method: those of the installed payment add-ons.
 LFS_PAYMENT_METHOD_PROCESSORS = []
 if "lfs_paypal" in INSTALLED_APPS:
