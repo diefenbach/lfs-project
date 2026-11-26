@@ -14,6 +14,9 @@ urlpatterns = [
     path("canonical/", include("lfs_canonical.urls")),
 ]
 
+if "lfs_bulk_prices" in settings.INSTALLED_APPS:
+    urlpatterns.append(path("bulk-prices/", include("lfs_bulk_prices.urls")))
+
 if "lfs_paypal" in settings.INSTALLED_APPS:
     urlpatterns.append(path("paypal/", include("lfs_paypal.urls")))
 

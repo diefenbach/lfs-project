@@ -16,6 +16,8 @@ dependencies = [
 postgres = ["psycopg[binary]>=3.2,<4"]
 # PayPal payments (set PAYPAL_* and add "lfs_paypal" to INSTALLED_APPS, see README).
 paypal = ["lfs-paypal>=2.0,<3"]
+# Price tiers by quantity (add "lfs_bulk_prices" to INSTALLED_APPS, see README).
+bulk-prices = ["lfs-bulk-prices>=2.0,<3"]
 # Cookie consent banner, for your own tracking (add "lfs_cookie_consent" to INSTALLED_APPS, see README).
 consent = ["lfs-cookie-consent>=2.0,<3"]
 # Google Tag Manager with Consent Mode; brings the consent banner along (set GTM_ID, see README).

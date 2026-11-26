@@ -33,6 +33,8 @@ pages. Without `POSTGRES_DB` the shop uses SQLite (`db.sqlite3`).
     `INSTALLED_APPS`; your scripts listen to its `lfs:consent-changed` event.
   - `gtm`: Google Tag Manager with Consent Mode, including the consent banner. Add `"lfs_cookie_consent"` and
     `"lfs_gtm"` to `INSTALLED_APPS` and set `GTM_ID`.
+  - `bulk-prices`: price tiers by quantity. Add `"lfs_bulk_prices"` to `INSTALLED_APPS`, run `migrate`, and choose
+    the price calculator "Bulk prices" for a product; it then gets a "Bulk prices" tab.
   - `production`: gunicorn.
 
 Without tracking the shop sets only the cookies it needs to work (session, CSRF), so it shows no consent banner.
