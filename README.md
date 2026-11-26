@@ -39,7 +39,9 @@ Without tracking the shop sets only the cookies it needs to work (session, CSRF)
 
 ## Settings
 
-Everything that differs between installations is an environment variable; `.env.example` lists them all. The LFS
+Everything that differs between installations is an environment variable; `.env.example` lists them all. Locally
+put them in `.env`: the settings read that file on every start (`manage.py`, `runserver`, gunicorn). Variables set in
+the real environment (server, systemd, Docker) win over the file, so in production you can leave it out. The LFS
 settings themselves (price calculators, units, criteria, ...) are in `shop/settings.py`.
 
 ## Production
