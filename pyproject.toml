@@ -8,6 +8,7 @@ dependencies = [
     "django-lfs>=1.0,<2",
     "lfs-theme>=1.0,<2",
     "lfs-canonical>=1.0,<2",
+    "python-dotenv>=1.0,<2",
 ]
 
 [project.optional-dependencies]
