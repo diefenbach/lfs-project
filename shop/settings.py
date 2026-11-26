@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     # Standard add-ons
     "lfs_canonical",
     "lfs_cookie_consent",
-    # Optional: "lfs_stripe" (install lfs-project[stripe]), "lfs_carousel", "lfs_bulk_prices", "lfs_samples", ...
+    # Optional: "lfs_paypal" (install lfs-project[paypal]), "lfs_stripe" (install lfs-project[stripe]),
+    # "lfs_carousel", "lfs_bulk_prices", "lfs_samples", ...
 ]
 if os.environ.get("POSTGRES_DB"):
     # PostgreSQL's unaccent: the search then ignores accents (creme finds crème).
@@ -162,11 +163,12 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # LFS: only the settings that differ from LFS's defaults (see lfs/settings.py in django-lfs).
 LFS_CURRENCY = os.environ.get("LFS_CURRENCY", "EUR")
-LFS_PAYMENT_METHOD_PROCESSORS = [
-    ["lfs_paypal.processor.PayPalProcessor", _("PayPal")],
-]
+# Payment processors a manager can choose for a payment method: those of the installed payment add-ons.
+LFS_PAYMENT_METHOD_PROCESSORS = []
+if "lfs_paypal" in INSTALLED_APPS:
+    LFS_PAYMENT_METHOD_PROCESSORS.append(["lfs_paypal.processor.PayPalProcessor", _("PayPal")])
 
-# PayPal (lfs-paypal): sandbox until you set your live credentials.
+# PayPal (lfs-paypal, optional): sandbox until you set your live credentials.
 PAYPAL_MODE = os.environ.get("PAYPAL_MODE", "sandbox")
 PAYPAL_CLIENT_ID = os.environ.get("PAYPAL_CLIENT_ID", "")
 PAYPAL_CLIENT_SECRET = os.environ.get("PAYPAL_CLIENT_SECRET", "")

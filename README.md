@@ -22,11 +22,12 @@ pages. Without `POSTGRES_DB` the shop uses SQLite (`db.sqlite3`).
 
 ## What is included
 
-- **django-lfs** with the add-ons it needs: portlets, reviews, postal, contact form, order numbers, PayPal.
+- **django-lfs** with the add-ons it needs: portlets, reviews, postal, contact form, order numbers.
 - **lfs-theme**, the default theme. Templates in `templates/` override it for your shop.
 - **lfs-canonical** and **lfs-cookie-consent**.
-- Optional extras: `uv sync --extra postgres` (PostgreSQL; the search then ignores accents), `--extra stripe`
-  (card payments; also add `"lfs_stripe"` to `INSTALLED_APPS`), `--extra production` (gunicorn).
+- Optional extras: `uv sync --extra postgres` (PostgreSQL; the search then ignores accents), `--extra paypal`
+  (PayPal; also add `"lfs_paypal"` to `INSTALLED_APPS` before running `lfs_init`), `--extra stripe` (card payments;
+  also add `"lfs_stripe"` to `INSTALLED_APPS`), `--extra production` (gunicorn).
 
 ## Settings
 
@@ -36,7 +37,7 @@ settings themselves (price calculators, units, criteria, ...) are in `shop/setti
 ## Production
 
 - Set `DJANGO_DEBUG=false`, `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS`, the
-  `POSTGRES_*` and `EMAIL_*` variables, and your PayPal credentials.
+  `POSTGRES_*` and `EMAIL_*` variables, and the credentials of your payment add-ons (`PAYPAL_*`, `STRIPE_*`).
 - `uv sync --extra postgres --extra production`, then `python manage.py collectstatic`.
 - Run `gunicorn shop.wsgi` behind a web server (nginx, Caddy) that terminates HTTPS, redirects HTTP to HTTPS, and
   serves `static/` and `media/`. Behind such a proxy set `DJANGO_BEHIND_PROXY=true`.

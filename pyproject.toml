@@ -14,6 +14,8 @@ dependencies = [
 [project.optional-dependencies]
 # PostgreSQL instead of SQLite (set POSTGRES_DB, see .env.example); also makes the search ignore accents.
 postgres = ["psycopg[binary]>=3.2,<4"]
+# PayPal payments (set PAYPAL_* and add "lfs_paypal" to INSTALLED_APPS, see README).
+paypal = ["lfs-paypal>=2.0,<3"]
 # Card payments with Stripe (set STRIPE_* and add "lfs_stripe" to INSTALLED_APPS, see README).
 stripe = ["lfs-stripe>=1.0.1,<2"]
 # Serving the shop in production.
