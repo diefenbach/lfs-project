@@ -1,0 +1,30 @@
+[project]
+name = "lfs-project"
+version = "1.0.0"
+description = "A new LFS shop: Django project with django-lfs, the default theme, and the standard add-ons"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django-lfs>=1.0,<2",
+    "lfs-theme>=1.0,<2",
+    "lfs-canonical>=1.0,<2",
+    "lfs-cookie-consent>=2.0,<3",
+]
+
+[project.optional-dependencies]
+# PostgreSQL instead of SQLite (set POSTGRES_DB, see .env.example); also makes the search ignore accents.
+postgres = ["psycopg[binary]>=3.2,<4"]
+# Card payments with Stripe (set STRIPE_* and add "lfs_stripe" to INSTALLED_APPS, see README).
+stripe = ["lfs-stripe>=1.0.1,<2"]
+# Serving the shop in production.
+production = ["gunicorn>=23,<24"]
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-django>=4.9,<5"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "shop.settings"
+testpaths = ["tests"]
