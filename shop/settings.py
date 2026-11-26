@@ -39,6 +39,13 @@ if not SECRET_KEY:
     SECRET_KEY = "django-insecure-local-development-only"
 
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
+if DEBUG and set(ALLOWED_HOSTS) - {"localhost", "127.0.0.1", "[::1]"}:
+    # Debug pages show code and settings, and the development key above would be live: never for a public host.
+    # This also catches a .env copied from .env.example that ended up on the server.
+    raise ImproperlyConfigured(
+        "DJANGO_DEBUG is on, but DJANGO_ALLOWED_HOSTS names a public host. "
+        "Set DJANGO_DEBUG=false (and DJANGO_SECRET_KEY) for a public shop."
+    )
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 
 if os.environ.get("POSTGRES_DB"):
