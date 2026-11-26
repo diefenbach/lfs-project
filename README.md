@@ -11,10 +11,10 @@ Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 git clone https://github.com/diefenbach/lfs-project.git myshop && cd myshop
 cp .env.example .env
 uv sync
-uv run --env-file .env python manage.py migrate
-uv run --env-file .env python manage.py lfs_init
-uv run --env-file .env python manage.py createsuperuser
-uv run --env-file .env python manage.py runserver
+uv run python manage.py migrate
+uv run python manage.py lfs_init
+uv run python manage.py createsuperuser
+uv run python manage.py runserver
 ```
 
 Then open http://127.0.0.1:8000/ for the shop and http://127.0.0.1:8000/manage/dashboard/ to add categories, products, and
@@ -39,27 +39,20 @@ Without tracking the shop sets only the cookies it needs to work (session, CSRF)
 
 ## Settings
 
-Everything that differs between installations is an environment variable; `.env.example` lists them all. The LFS
+Everything that differs between installations is an environment variable; `.env.example` lists them all. Locally
+put them in `.env`: the settings read that file on every start (`manage.py`, `runserver`, gunicorn). Variables set in
+the real environment (server, systemd, Docker) win over the file, so in production you can leave it out. The LFS
 settings themselves (price calculators, units, criteria, ...) are in `shop/settings.py`.
 
 ## Production
 
 - Set `DJANGO_DEBUG=false`, `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS`, the
   `POSTGRES_*` and `EMAIL_*` variables, and the credentials of your payment add-ons (`PAYPAL_*`, `STRIPE_*`).
+  With `DJANGO_DEBUG` on and a public host in `DJANGO_ALLOWED_HOSTS` the shop refuses to start, so a `.env` copied
+  from `.env.example` cannot switch on debug pages on the server.
 - `uv sync --extra postgres --extra production`, then `python manage.py collectstatic`.
 - Run `gunicorn shop.wsgi` behind a web server (nginx, Caddy) that terminates HTTPS, redirects HTTP to HTTPS, and
   serves `static/` and `media/`. Behind such a proxy set `DJANGO_BEHIND_PROXY=true`.
-
-## Before django-lfs 1.0 is on PyPI
-
-Until then the packages come from a local package folder:
-
-```sh
-UV_FIND_LINKS=/path/to/packages uv sync
-```
-
-When a package in that folder is rebuilt with the same version number, add `--reinstall --no-cache`, otherwise uv
-keeps the copy it installed before.
 
 ## License
 

@@ -1,18 +1,21 @@
 """Settings of the shop.
 
-Everything that differs between installations comes from environment variables (see ``.env.example``); the rest
-configures LFS and its add-ons. Without ``POSTGRES_DB`` the shop uses SQLite in ``db.sqlite3``.
+Everything that differs between installations comes from environment variables (see ``.env.example``); locally
+they can be in ``.env`` in the project folder, which is read here. Variables set in the real environment win over the
+file. The rest configures LFS and its add-ons. Without ``POSTGRES_DB`` the shop uses SQLite in ``db.sqlite3``.
 """
 
 import os
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
 
 from lfs.settings import LFS_APPS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 
 def env_bool(name: str, default: bool = False) -> bool:
@@ -36,6 +39,13 @@ if not SECRET_KEY:
     SECRET_KEY = "django-insecure-local-development-only"
 
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
+if DEBUG and set(ALLOWED_HOSTS) - {"localhost", "127.0.0.1", "[::1]"}:
+    # Debug pages show code and settings, and the development key above would be live: never for a public host.
+    # This also catches a .env copied from .env.example that ended up on the server.
+    raise ImproperlyConfigured(
+        "DJANGO_DEBUG is on, but DJANGO_ALLOWED_HOSTS names a public host. "
+        "Set DJANGO_DEBUG=false (and DJANGO_SECRET_KEY) for a public shop."
+    )
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 
 if os.environ.get("POSTGRES_DB"):
