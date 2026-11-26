@@ -1,0 +1,67 @@
+# LFS shop
+
+A new online shop with [LFS](https://github.com/diefenbach/django-lfs) (django-lfs): a Django project with the
+default theme and the standard add-ons, configured through environment variables.
+
+## Quick start
+
+Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
+
+```sh
+git clone https://github.com/diefenbach/lfs-project.git myshop && cd myshop
+cp .env.example .env
+uv sync
+uv run --env-file .env python manage.py migrate
+uv run --env-file .env python manage.py lfs_init
+uv run --env-file .env python manage.py createsuperuser
+uv run --env-file .env python manage.py runserver
+```
+
+Then open http://127.0.0.1:8000/ for the shop and http://127.0.0.1:8000/manage/dashboard/ to add categories, products, and
+pages. Without `POSTGRES_DB` the shop uses SQLite (`db.sqlite3`).
+
+## What is included
+
+- **django-lfs** with the add-ons it needs: portlets, reviews, postal, contact form, order numbers.
+- **lfs-theme**, the default theme. Templates in `templates/` override it for your shop.
+- **lfs-canonical**.
+- Optional extras, combinable (`uv sync --extra paypal --extra gtm`):
+  - `postgres`: PostgreSQL; the search then ignores accents.
+  - `paypal`: PayPal. Add `"lfs_paypal"` to `INSTALLED_APPS` before running `lfs_init` and set `PAYPAL_*`.
+  - `stripe`: card payments. Add `"lfs_stripe"` to `INSTALLED_APPS` and set `STRIPE_*`.
+  - `consent`: the cookie consent banner, for tracking you add yourself. Add `"lfs_cookie_consent"` to
+    `INSTALLED_APPS`; your scripts listen to its `lfs:consent-changed` event.
+  - `gtm`: Google Tag Manager with Consent Mode, including the consent banner. Add `"lfs_cookie_consent"` and
+    `"lfs_gtm"` to `INSTALLED_APPS` and set `GTM_ID`.
+  - `production`: gunicorn.
+
+Without tracking the shop sets only the cookies it needs to work (session, CSRF), so it shows no consent banner.
+
+## Settings
+
+Everything that differs between installations is an environment variable; `.env.example` lists them all. The LFS
+settings themselves (price calculators, units, criteria, ...) are in `shop/settings.py`.
+
+## Production
+
+- Set `DJANGO_DEBUG=false`, `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS`, the
+  `POSTGRES_*` and `EMAIL_*` variables, and the credentials of your payment add-ons (`PAYPAL_*`, `STRIPE_*`).
+- `uv sync --extra postgres --extra production`, then `python manage.py collectstatic`.
+- Run `gunicorn shop.wsgi` behind a web server (nginx, Caddy) that terminates HTTPS, redirects HTTP to HTTPS, and
+  serves `static/` and `media/`. Behind such a proxy set `DJANGO_BEHIND_PROXY=true`.
+
+## Before django-lfs 1.0 is on PyPI
+
+Until then the packages come from a local package folder:
+
+```sh
+UV_FIND_LINKS=/path/to/packages uv sync
+```
+
+When a package in that folder is rebuilt with the same version number, add `--reinstall --no-cache`, otherwise uv
+keeps the copy it installed before.
+
+## License
+
+BSD (django-lfs, lfs-theme). The management interface bundles TinyMCE under GPL-2.0-or-later; see the django-lfs
+README.
