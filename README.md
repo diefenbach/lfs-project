@@ -24,10 +24,18 @@ pages. Without `POSTGRES_DB` the shop uses SQLite (`db.sqlite3`).
 
 - **django-lfs** with the add-ons it needs: portlets, reviews, postal, contact form, order numbers.
 - **lfs-theme**, the default theme. Templates in `templates/` override it for your shop.
-- **lfs-canonical** and **lfs-cookie-consent**.
-- Optional extras: `uv sync --extra postgres` (PostgreSQL; the search then ignores accents), `--extra paypal`
-  (PayPal; also add `"lfs_paypal"` to `INSTALLED_APPS` before running `lfs_init`), `--extra stripe` (card payments;
-  also add `"lfs_stripe"` to `INSTALLED_APPS`), `--extra production` (gunicorn).
+- **lfs-canonical**.
+- Optional extras, combinable (`uv sync --extra paypal --extra gtm`):
+  - `postgres`: PostgreSQL; the search then ignores accents.
+  - `paypal`: PayPal. Add `"lfs_paypal"` to `INSTALLED_APPS` before running `lfs_init` and set `PAYPAL_*`.
+  - `stripe`: card payments. Add `"lfs_stripe"` to `INSTALLED_APPS` and set `STRIPE_*`.
+  - `consent`: the cookie consent banner, for tracking you add yourself. Add `"lfs_cookie_consent"` to
+    `INSTALLED_APPS`; your scripts listen to its `lfs:consent-changed` event.
+  - `gtm`: Google Tag Manager with Consent Mode, including the consent banner. Add `"lfs_cookie_consent"` and
+    `"lfs_gtm"` to `INSTALLED_APPS` and set `GTM_ID`.
+  - `production`: gunicorn.
+
+Without tracking the shop sets only the cookies it needs to work (session, CSRF), so it shows no consent banner.
 
 ## Settings
 

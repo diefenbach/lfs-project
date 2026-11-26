@@ -8,7 +8,6 @@ dependencies = [
     "django-lfs>=1.0,<2",
     "lfs-theme>=1.0,<2",
     "lfs-canonical>=1.0,<2",
-    "lfs-cookie-consent>=2.0,<3",
 ]
 
 [project.optional-dependencies]
@@ -16,6 +15,10 @@ dependencies = [
 postgres = ["psycopg[binary]>=3.2,<4"]
 # PayPal payments (set PAYPAL_* and add "lfs_paypal" to INSTALLED_APPS, see README).
 paypal = ["lfs-paypal>=2.0,<3"]
+# Cookie consent banner, for your own tracking (add "lfs_cookie_consent" to INSTALLED_APPS, see README).
+consent = ["lfs-cookie-consent>=2.0,<3"]
+# Google Tag Manager with Consent Mode; brings the consent banner along (set GTM_ID, see README).
+gtm = ["lfs-gtm>=1.0,<2"]
 # Card payments with Stripe (set STRIPE_* and add "lfs_stripe" to INSTALLED_APPS, see README).
 stripe = ["lfs-stripe>=1.0.1,<2"]
 # Serving the shop in production.

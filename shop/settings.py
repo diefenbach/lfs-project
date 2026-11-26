@@ -61,9 +61,8 @@ INSTALLED_APPS = [
     *LFS_APPS,
     # Standard add-ons
     "lfs_canonical",
-    "lfs_cookie_consent",
-    # Optional: "lfs_paypal" (install lfs-project[paypal]), "lfs_stripe" (install lfs-project[stripe]),
-    # "lfs_carousel", "lfs_bulk_prices", "lfs_samples", ...
+    # Optional: "lfs_paypal" (lfs-project[paypal]), "lfs_stripe" (lfs-project[stripe]), "lfs_cookie_consent"
+    # (lfs-project[consent]), "lfs_cookie_consent" and then "lfs_gtm" (lfs-project[gtm]), "lfs_carousel", ...
 ]
 if os.environ.get("POSTGRES_DB"):
     # PostgreSQL's unaccent: the search then ignores accents (creme finds crème).
@@ -172,6 +171,9 @@ if "lfs_paypal" in INSTALLED_APPS:
 PAYPAL_MODE = os.environ.get("PAYPAL_MODE", "sandbox")
 PAYPAL_CLIENT_ID = os.environ.get("PAYPAL_CLIENT_ID", "")
 PAYPAL_CLIENT_SECRET = os.environ.get("PAYPAL_CLIENT_SECRET", "")
+
+# Google Tag Manager (lfs-gtm, optional): without GTM_ID nothing is loaded.
+GTM_ID = os.environ.get("GTM_ID", "")
 
 # Stripe (lfs-stripe, optional)
 STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
