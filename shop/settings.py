@@ -1,18 +1,21 @@
 """Settings of the shop.
 
-Everything that differs between installations comes from environment variables (see ``.env.example``); the rest
-configures LFS and its add-ons. Without ``POSTGRES_DB`` the shop uses SQLite in ``db.sqlite3``.
+Everything that differs between installations comes from environment variables (see ``.env.example``); locally
+they can be in ``.env`` in the project folder, which is read here. Variables set in the real environment win over the
+file. The rest configures LFS and its add-ons. Without ``POSTGRES_DB`` the shop uses SQLite in ``db.sqlite3``.
 """
 
 import os
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
 
 from lfs.settings import LFS_APPS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 
 def env_bool(name: str, default: bool = False) -> bool:

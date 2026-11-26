@@ -11,10 +11,10 @@ Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 git clone https://github.com/diefenbach/lfs-project.git myshop && cd myshop
 cp .env.example .env
 uv sync
-uv run --env-file .env python manage.py migrate
-uv run --env-file .env python manage.py lfs_init
-uv run --env-file .env python manage.py createsuperuser
-uv run --env-file .env python manage.py runserver
+uv run python manage.py migrate
+uv run python manage.py lfs_init
+uv run python manage.py createsuperuser
+uv run python manage.py runserver
 ```
 
 Then open http://127.0.0.1:8000/ for the shop and http://127.0.0.1:8000/manage/dashboard/ to add categories, products, and
