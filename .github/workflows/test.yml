@@ -1,0 +1,36 @@
+# Runs the template's tests on every push to main and every pull request.
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    env:
+      # The settings refuse to start without a secret key unless DEBUG is on.
+      DJANGO_DEBUG: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        # django-lfs 1.0 and lfs-theme 1.0 are not on PyPI yet, so they come from their main branches; everything
+        # else from PyPI. Once they are released this step becomes: uv sync --group dev
+        run: |
+          uv venv --python ${{ matrix.python-version }}
+          uv pip install -r pyproject.toml --group dev \
+            "django-lfs @ git+https://github.com/diefenbach/django-lfs@main" \
+            "lfs-theme @ git+https://github.com/diefenbach/lfs-theme@main"
+
+      - name: Run tests
+        run: .venv/bin/python -m pytest
