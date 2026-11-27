@@ -14,12 +14,12 @@ CSS = "lfs_theme/css/lfs_theme.css"
 
 def run(tmp_path: Path, code: list[str], **variables: str) -> subprocess.CompletedProcess:
     """Run ``code`` (manage.py arguments, or ``-c`` and Python) in a copy of the project with ``variables``."""
-    if not (tmp_path / "shop").exists():
-        shutil.copytree(PROJECT / "shop", tmp_path / "shop")
+    if not (tmp_path / "project").exists():
+        shutil.copytree(PROJECT / "project", tmp_path / "project")
         shutil.copy(PROJECT / "manage.py", tmp_path / "manage.py")
     environ = {key: value for key, value in os.environ.items() if not key.startswith("DJANGO_")}
     environ["PYTHONPATH"] = os.pathsep.join([str(tmp_path), os.environ.get("PYTHONPATH", "")])
-    environ["DJANGO_SETTINGS_MODULE"] = "shop.settings"
+    environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
     return subprocess.run(
         [sys.executable, *code], cwd=tmp_path, env={**environ, **variables}, capture_output=True, text=True
     )

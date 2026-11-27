@@ -44,7 +44,7 @@ Without tracking the shop sets only the cookies it needs to work (session, CSRF)
 Everything that differs between installations is an environment variable; `.env.example` lists them all. Locally
 put them in `.env`: the settings read that file on every start (`manage.py`, `runserver`, gunicorn). Variables set in
 the real environment (server, systemd, Docker) win over the file, so in production you can leave it out. The LFS
-settings themselves (price calculators, units, criteria, ...) are in `shop/settings.py`.
+settings themselves (price calculators, units, criteria, ...) are in `project/settings.py`.
 
 ## Production
 
@@ -55,7 +55,7 @@ settings themselves (price calculators, units, criteria, ...) are in `shop/setti
 - `uv sync --extra postgres --extra production`, then `python manage.py collectstatic` on every deployment: with
   `DJANGO_DEBUG=false` the static files get content-hashed names, so browsers never mix cached old files with new
   pages, and the web server can cache `static/` for a long time.
-- Run `gunicorn shop.wsgi` behind a web server (nginx, Caddy) that terminates HTTPS, redirects HTTP to HTTPS, and
+- Run `gunicorn project.wsgi` behind a web server (nginx, Caddy) that terminates HTTPS, redirects HTTP to HTTPS, and
   serves `static/` and `media/`. Behind such a proxy set `DJANGO_BEHIND_PROXY=true`.
 
 ## License

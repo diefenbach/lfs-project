@@ -89,8 +89,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "shop.urls"
-WSGI_APPLICATION = "shop.wsgi.application"
+ROOT_URLCONF = "project.urls"
+WSGI_APPLICATION = "project.wsgi.application"
 
 TEMPLATES = [
     {

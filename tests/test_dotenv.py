@@ -13,7 +13,7 @@ PROJECT = Path(__file__).resolve().parent.parent
 def currency_in_settings(project: Path, environ: dict[str, str]) -> str:
     """Load the project's settings in a fresh interpreter and return LFS_CURRENCY."""
     result = subprocess.run(
-        [sys.executable, "-c", "import shop.settings as s; print(s.LFS_CURRENCY)"],
+        [sys.executable, "-c", "import project.settings as s; print(s.LFS_CURRENCY)"],
         cwd=project,
         env={**environ, "PYTHONPATH": os.pathsep.join([str(project), os.environ.get("PYTHONPATH", "")])},
         capture_output=True,
@@ -25,7 +25,7 @@ def currency_in_settings(project: Path, environ: dict[str, str]) -> str:
 
 def project_with_env_file(tmp_path: Path, content: str) -> Path:
     """Copy the project's settings to ``tmp_path`` and write ``.env`` next to them."""
-    shutil.copytree(PROJECT / "shop", tmp_path / "shop")
+    shutil.copytree(PROJECT / "project", tmp_path / "project")
     (tmp_path / ".env").write_text(content)
     return tmp_path
 

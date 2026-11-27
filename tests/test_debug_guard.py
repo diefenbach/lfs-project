@@ -12,11 +12,11 @@ PROJECT = Path(__file__).resolve().parent.parent
 
 def load_settings(tmp_path: Path, **variables: str) -> subprocess.CompletedProcess:
     """Load a copy of the project's settings (without any ``.env``) in a fresh interpreter with ``variables``."""
-    shutil.copytree(PROJECT / "shop", tmp_path / "shop")
+    shutil.copytree(PROJECT / "project", tmp_path / "project")
     environ = {key: value for key, value in os.environ.items() if not key.startswith("DJANGO_")}
     environ["PYTHONPATH"] = os.pathsep.join([str(tmp_path), os.environ.get("PYTHONPATH", "")])
     return subprocess.run(
-        [sys.executable, "-c", "import shop.settings as s; print(s.DEBUG)"],
+        [sys.executable, "-c", "import project.settings as s; print(s.DEBUG)"],
         cwd=tmp_path,
         env={**environ, **variables},
         capture_output=True,

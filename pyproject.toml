@@ -34,5 +34,5 @@ package = false
 dev = ["pytest>=8,<10", "pytest-django>=4.9,<5"]
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "shop.settings"
+DJANGO_SETTINGS_MODULE = "project.settings"
 testpaths = ["tests"]
