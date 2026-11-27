@@ -24,13 +24,8 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies
-        # django-lfs 1.0 and lfs-theme 1.0 are not on PyPI yet, so they come from their main branches; everything
-        # else from PyPI. Once they are released this step becomes: uv sync --group dev
-        run: |
-          uv venv --python ${{ matrix.python-version }}
-          uv pip install -r pyproject.toml --group dev \
-            "django-lfs @ git+https://github.com/diefenbach/django-lfs@main" \
-            "lfs-theme @ git+https://github.com/diefenbach/lfs-theme@main"
+        # Everything from PyPI, as a new shop installs it.
+        run: uv sync --group dev --python ${{ matrix.python-version }}
 
       - name: Run tests
         run: .venv/bin/python -m pytest
