@@ -135,6 +135,13 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
+if not DEBUG:
+    # Content-hashed file names (lfs_theme.3f2a....css): after an update browsers and proxies fetch the new files
+    # instead of serving cached old ones next to new HTML. Needs `collectstatic` on every deployment.
+    STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"},
+    }
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 COMPRESS_ENABLED = False

@@ -52,7 +52,9 @@ settings themselves (price calculators, units, criteria, ...) are in `shop/setti
   `POSTGRES_*` and `EMAIL_*` variables, and the credentials of your payment add-ons (`PAYPAL_*`, `STRIPE_*`).
   With `DJANGO_DEBUG` on and a public host in `DJANGO_ALLOWED_HOSTS` the shop refuses to start, so a `.env` copied
   from `.env.example` cannot switch on debug pages on the server.
-- `uv sync --extra postgres --extra production`, then `python manage.py collectstatic`.
+- `uv sync --extra postgres --extra production`, then `python manage.py collectstatic` on every deployment: with
+  `DJANGO_DEBUG=false` the static files get content-hashed names, so browsers never mix cached old files with new
+  pages, and the web server can cache `static/` for a long time.
 - Run `gunicorn shop.wsgi` behind a web server (nginx, Caddy) that terminates HTTPS, redirects HTTP to HTTPS, and
   serves `static/` and `media/`. Behind such a proxy set `DJANGO_BEHIND_PROXY=true`.
 
