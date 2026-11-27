@@ -12,6 +12,8 @@ urlpatterns = [
     path("reviews/", include("reviews.urls")),
     path("captcha/", include("captcha.urls")),
     path("canonical/", include("lfs_canonical.urls")),
+    # The theme loads the mobile menu from here instead of putting it into every page.
+    path("theme/", include("lfs_theme.urls")),
 ]
 
 if "lfs_bulk_prices" in settings.INSTALLED_APPS:

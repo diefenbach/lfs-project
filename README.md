@@ -23,7 +23,7 @@ pages. Without `POSTGRES_DB` the shop uses SQLite (`db.sqlite3`).
 ## What is included
 
 - **django-lfs** with the add-ons it needs: portlets, reviews, postal, contact form, order numbers.
-- **lfs-theme**, the default theme. Templates in `templates/` override it for your shop.
+- **lfs-theme**, the default theme, with its URLs under `theme/`. Templates in `templates/` override it for your shop.
 - **lfs-canonical**.
 - Optional extras, combinable (`uv sync --extra paypal --extra gtm`):
   - `postgres`: PostgreSQL; the search then ignores accents.
