@@ -1,5 +1,5 @@
 [project]
-name = "lfs-project"
+name = "lfs-starter"
 version = "1.0.0"
 description = "A new LFS shop: Django project with django-lfs, the default theme, and the standard add-ons"
 readme = "README.md"

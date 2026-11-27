@@ -8,7 +8,7 @@ default theme and the standard add-ons, configured through environment variables
 Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 
 ```sh
-git clone https://github.com/diefenbach/lfs-project.git myshop && cd myshop
+git clone https://github.com/diefenbach/lfs-starter.git myshop && cd myshop
 cp .env.example .env
 uv sync
 uv run python manage.py migrate

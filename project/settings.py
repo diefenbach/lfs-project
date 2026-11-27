@@ -71,9 +71,9 @@ INSTALLED_APPS = [
     *LFS_APPS,
     # Standard add-ons
     "lfs_canonical",
-    # Optional: "lfs_paypal" (lfs-project[paypal]), "lfs_stripe" (lfs-project[stripe]), "lfs_cookie_consent"
-    # (lfs-project[consent]), "lfs_cookie_consent" and then "lfs_gtm" (lfs-project[gtm]),
-    # "lfs_bulk_prices" (lfs-project[bulk-prices]), "lfs_carousel", ...
+    # Optional: "lfs_paypal" (lfs-starter[paypal]), "lfs_stripe" (lfs-starter[stripe]), "lfs_cookie_consent"
+    # (lfs-starter[consent]), "lfs_cookie_consent" and then "lfs_gtm" (lfs-starter[gtm]),
+    # "lfs_bulk_prices" (lfs-starter[bulk-prices]), "lfs_carousel", ...
 ]
 if os.environ.get("POSTGRES_DB"):
     # PostgreSQL's unaccent: the search then ignores accents (creme finds crème).
