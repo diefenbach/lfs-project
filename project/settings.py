@@ -146,7 +146,10 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 COMPRESS_ENABLED = False
 
-CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
+# No cache: LFS deletes cache entries when products and categories change, but with a cache per process (LocMemCache)
+# only in the gunicorn worker that saved; the other workers would show old prices for minutes. A cache shared by all
+# workers (Redis) can replace this later.
+CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
 
 # E-mail: printed to the console in development, sent via SMTP otherwise.
 if DEBUG and not os.environ.get("EMAIL_HOST"):
